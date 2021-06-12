@@ -1,5 +1,6 @@
 # Invoice_generator
 This is a Invoice Generator Project in Django.I have used mysql as Database here. I have used Bootstrap for designing purpose.
+You must have an internet connection to run the project.
 #### How to run 
 
 * To run this you simply have to clone the repo
