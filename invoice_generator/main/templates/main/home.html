@@ -1,0 +1,103 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block form %}
+<div class='mt-3'>
+    <form method="post" action="{% url 'add_invoice' %}" id="form">
+{% csrf_token %}
+        <div class="mb-3 ">
+            <label for="exampleFormControlInput1" class="form-label" >Invoice Id</label>
+            <input type="number" class="form-control" oninput="validate_id()" name="invoice_id" maxlength=5 id="invoice" required>
+            <span id="invoice_checker"></span>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Receipient Address</label>
+            <textarea class="form-control" name="address" rows="2" required></textarea>
+          </div>
+          <table class="table  table-sm" id="tbl">
+            <thead class='table-dark'>
+              <tr>
+                <th scope="col">Item Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Amount</th>
+                <th scope="col">GST or Tax</th>
+                <th scope="col">Total Amount</th>
+
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr>
+                <td><input type="text" class="input"  id="name0" name='name'  required></td>
+                <td><input type="text"  class="input" id="price0"  name='price' oninput = "amount_calc(this.id)" required ></td>
+                <td><input type="text" class="input" id="quantity0" oninput = "amount_calc(this.id)" name='quantity' required></td>
+                <td><input type="text" class="input" id="amount0" value=0 name='amount' readonly  required></td>
+                <td><input type="text" class="input" id="tax0" value=0 oninput = "amount_calc(this.id)" name='tax' required></td>
+                <td><input type="text" class="input" id="total0" name='total' value=0 readonly required ></td>
+
+              </tr>
+
+            </tbody>
+            <tfoot class="align-left"> 
+              <tr>
+                <td colspan="4" class="border-0"></td>
+
+                <td >Grand Total</td>
+                <td ><input type="text" id="grand_total" class="input" name='grand_total' value=0 readonly ></td>
+              </tr>
+            </tfoot>
+          </table> 
+          <button type="button" id="addbtn" class='btn btn-danger' onclick="insert_Row()">Add More+</button>
+
+        <button class='btn btn-success'  type="submit">Submit</button>
+    </form>
+
+</div>
+{% endblock form %}
+
+{% block Custom_js %}      
+ <script src="{% static 'main/add_invoice.js' %}"></script>
+
+ <script>
+   $(document).ready(function(){
+
+   $('#invoice').focusout(function (e) {
+    var invoice_checker=document.getElementById("invoice_checker");
+    e.preventDefault();
+    // get the invoice id
+    var invoice_id = $(this).val();
+    // GET AJAX request
+    $.ajax({
+        type: 'GET',
+        url: "{% url 'validate_invoice' %}",
+        data: {"invoice_id": invoice_id},
+        success: function (response) {
+            if(!response["valid"]){
+                
+                var invoice_id = $("#id");
+                invoice_id.val("")
+                invoice_id.focus()
+                invoice_checker.innerHTML="Invoice Id not available";
+                invoice_checker.style.color="red";
+
+            }
+            else
+            {
+
+              invoice_checker.innerHTML="Invoice Id is available";
+              invoice_checker.style.color="green";
+
+            }
+        },
+        error: function (response) {
+            console.log(response)
+        }
+    })
+});});
+
+function validate_id()
+{
+  
+}
+ </script>
+{% endblock Custom_js %}
