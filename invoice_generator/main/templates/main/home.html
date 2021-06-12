@@ -7,7 +7,7 @@
 {% csrf_token %}
         <div class="mb-3 ">
             <label for="exampleFormControlInput1" class="form-label" >Invoice Id</label>
-            <input type="number" class="form-control" oninput="validate_id()" name="invoice_id" maxlength=5 id="invoice" required>
+            <input type="number" class="form-control" name="invoice_id" maxlength="5" id="invoice" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
             <span id="invoice_checker"></span>
           </div>
           <div class="mb-3">
@@ -95,9 +95,5 @@
     })
 });});
 
-function validate_id()
-{
-  
-}
  </script>
 {% endblock Custom_js %}
