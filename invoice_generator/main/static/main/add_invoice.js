@@ -37,13 +37,11 @@ var grand_total=0;
 for(i=0;i<total_rows;i++)
 {
     var a= parseFloat(document.getElementById('total'+i).value);
+    console.log(a);
     grand_total=grand_total+a;
 
 }
 
 grand_total_field.value=grand_total;
-
-
-
 }
 

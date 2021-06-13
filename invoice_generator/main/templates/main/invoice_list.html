@@ -29,7 +29,7 @@
         <tbody>
           {% for item in Invoice_list %}
           <tr>
-            <th scope="row">{{item.id}}</th>
+            <th scope="row">{{forloop.counter}}</th>
             <td>{{item.invoice_id }}</td>
             <td>{{item.details}}</td>
           </tr>

@@ -7,7 +7,7 @@
 {% csrf_token %}
         <div class="mb-3 ">
             <label for="exampleFormControlInput1" class="form-label" >Invoice Id</label>
-            <input type="number" class="form-control" oninput="validate_id()" name="invoice_id" maxlength=5 id="invoice" required>
+            <input type="number" class="form-control" maxlength="5"  oninput="javascript: if (this.value.length > this.maxLength ) this.value = this.value.slice(0, this.maxLength);" name="invoice_id" maxlength=5 id="invoice" required>
             <span id="invoice_checker"></span>
           </div>
           <div class="mb-3">
@@ -63,9 +63,21 @@
 
    $('#invoice').focusout(function (e) {
     var invoice_checker=document.getElementById("invoice_checker");
+    
     e.preventDefault();
     // get the invoice id
     var invoice_id = $(this).val();
+    if(invoice_id.length<5)
+    {
+
+invoice_checker.innerHTML="please enter 5 numbers";
+invoice_checker.style.color="red";
+
+$(this).val('');
+
+    }
+    if(invoice_id.length ==5)
+    {
     // GET AJAX request
     $.ajax({
         type: 'GET',
@@ -74,9 +86,9 @@
         success: function (response) {
             if(!response["valid"]){
                 
-                var invoice_id = $("#id");
-                invoice_id.val("")
-                invoice_id.focus()
+                var invoice_id = $("#invoice");
+                invoice_id.val("");
+                invoice_id.focus();
                 invoice_checker.innerHTML="Invoice Id not available";
                 invoice_checker.style.color="red";
 
@@ -93,11 +105,8 @@
             console.log(response)
         }
     })
+  }
 });});
 
-function validate_id()
-{
-  
-}
  </script>
 {% endblock Custom_js %}

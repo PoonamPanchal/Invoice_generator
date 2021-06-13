@@ -35,14 +35,15 @@ def Home(request):
 #Invoice Generate
 def Invoice_list(request):
     Invoice_list=Invoices.objects.all().order_by('-id')[:10]
-    for obj in Invoice_list:
-        print(type(obj.details))
+
+        
     return render(request,'main/invoice_list.html',{'Invoice_list':Invoice_list})
 
 def validate_invoice(request):
     if request.is_ajax and request.method == "GET":
         # get the invoice id from the client side.
         invoice_id = request.GET.get("invoice_id", None)
+    
         # check for the invoice id in the database.
         if Invoices.objects.filter(invoice_id = invoice_id).exists():
             # if invoice_id found return not valid new invoice_id
