@@ -7,7 +7,9 @@
 {% csrf_token %}
         <div class="mb-3 ">
             <label for="exampleFormControlInput1" class="form-label" >Invoice Id</label>
-            <input type="number" class="form-control" maxlength="5"  oninput="javascript: if (this.value.length > this.maxLength ) this.value = this.value.slice(0, this.maxLength);" name="invoice_id" maxlength=5 id="invoice" required>
+
+            <input type="number" class="form-control" maxlength="5"  oninput="javascript: if (this.value.length > this.maxLength ) this.value = this.value.slice(0, this.maxLength);" name="invoice_id" id="invoice" required>
+
             <span id="invoice_checker"></span>
           </div>
           <div class="mb-3">

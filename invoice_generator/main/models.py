@@ -4,7 +4,7 @@ from django.db import models
 
 class Invoices(models.Model):
     
-    invoice_id=models.IntegerField(max_length=5,unique=True)
+    invoice_id=models.IntegerField(unique=True)
     details=models.TextField()
     
 
